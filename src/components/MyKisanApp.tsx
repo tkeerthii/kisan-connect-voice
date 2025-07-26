@@ -9,7 +9,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { BottomNav } from './layout/BottomNav';
 
 type AppState = 'splash' | 'login' | 'home';
-type TabState = 'home' | 'tools' | 'tips' | 'history' | 'settings';
+type TabState = 'home' | 'tips' | 'history' | 'settings';
 
 export const MyKisanApp = () => {
   const [appState, setAppState] = useState<AppState>('splash');
