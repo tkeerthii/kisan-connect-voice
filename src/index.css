@@ -1,42 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* MyKisanAI Design System - Earthy, farmer-friendly colors */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Earthy Background Colors */
+    --background: 42 20% 97%; /* Warm cream */
+    --foreground: 20 14% 15%; /* Dark brown */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card Colors */
+    --card: 40 25% 98%; /* Soft cream */
+    --card-foreground: 20 14% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Primary Brand Colors - Earth Green */
+    --primary: 95 38% 35%; /* Rich earth green */
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 95 45% 65%; /* Lighter green for effects */
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Secondary Colors - Warm Brown */
+    --secondary: 25 35% 85%; /* Warm beige */
+    --secondary-foreground: 20 14% 25%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Accent Colors - Harvest Gold */
+    --accent: 45 85% 75%; /* Warm golden yellow */
+    --accent-foreground: 20 14% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted Colors */
+    --muted: 40 15% 92%;
+    --muted-foreground: 20 8% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* UI Elements */
+    --border: 35 20% 88%;
+    --input: 40 20% 94%;
+    --ring: 95 38% 35%;
+    --popover: 40 25% 98%;
+    --popover-foreground: 20 14% 15%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Destructive */
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(95 38% 35%), hsl(95 45% 45%));
+    --gradient-warm: linear-gradient(135deg, hsl(45 85% 75%), hsl(35 75% 65%));
+    --gradient-earth: linear-gradient(180deg, hsl(42 20% 97%), hsl(40 25% 94%));
 
-    --radius: 0.5rem;
+    /* Shadows */
+    --shadow-warm: 0 4px 20px hsl(35 30% 70% / 0.15);
+    --shadow-primary: 0 8px 30px hsl(95 38% 35% / 0.2);
+    --shadow-glow: 0 0 40px hsl(95 45% 65% / 0.3);
+
+    /* Animation */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --mic-pulse: 0 0 0 0 hsl(95 38% 35% / 0.7);
+
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +122,96 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  /* Voice Assistant Button */
+  .mic-button {
+    @apply relative bg-gradient-to-br from-primary to-primary/80 text-primary-foreground
+           rounded-full p-6 shadow-primary transition-all duration-300
+           hover:shadow-glow hover:scale-105 active:scale-95;
+  }
+
+  .mic-pulse {
+    animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+  }
+
+  /* Tool Cards */
+  .tool-card {
+    @apply bg-card rounded-2xl p-6 shadow-warm border border-border/50
+           transition-all duration-300 hover:shadow-primary hover:-translate-y-1
+           cursor-pointer;
+  }
+
+  /* Farmer-friendly Gradients */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-warm {
+    background: var(--gradient-warm);
+  }
+
+  .gradient-earth {
+    background: var(--gradient-earth);
+  }
+
+  /* Bottom Popup */
+  .bottom-popup {
+    @apply fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-md
+           border-t border-border rounded-t-3xl p-6 shadow-2xl
+           transform translate-y-full transition-transform duration-300 ease-out;
+  }
+
+  .bottom-popup.open {
+    @apply translate-y-0;
+  }
+
+  /* Custom Animations */
+  .fade-in {
+    animation: fade-in 0.4s ease-out;
+  }
+
+  .slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+}
+
+@layer utilities {
+  /* Animation Keyframes */
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: var(--mic-pulse);
+    }
+    40%,
+    50% {
+      box-shadow: 0 0 0 20px hsl(95 38% 35% / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 20px hsl(95 38% 35% / 0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
 }
